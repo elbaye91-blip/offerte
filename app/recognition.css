@@ -59,3 +59,26 @@
  .upload-actions{padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
 }
 
+@media(max-width:480px){
+ .content,.panel,.quote-grid,.quote-card,.quote-main{min-width:0;max-width:100%;width:100%}
+ .quote-grid{display:block;background:transparent}
+ .quote-card{display:block;border-bottom:1px solid #e7eae6;overflow:hidden}
+ .document-icon{display:none}
+ .quote-card h3,.quote-card p,.line-item strong,.line-item small{overflow-wrap:anywhere;word-break:break-word}
+ .quote-card p{white-space:normal;line-height:1.45}
+ .line-items{width:100%;overflow:hidden}
+ .line-items-head{display:none}
+ .line-item{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:11px 10px}
+ .line-item>span{min-width:0;flex:1}
+ .line-item b{flex:none;max-width:42%;white-space:nowrap}
+ .quote-info{grid-template-columns:1fr!important;gap:0;padding:4px 0}
+ .quote-info span{padding:9px 0;border-bottom:1px solid #edf0ec}
+ .quote-info span:last-child{border-bottom:0}
+ .quote-info small{font-size:10px}
+ .quote-info strong{font-size:13px}
+ .quote-actions{grid-template-columns:1fr}
+ .category-card{grid-template-columns:1fr!important}
+ .category-card>span:first-child{grid-column:auto}
+ .category-card>span:not(:first-child){padding-top:8px;border-top:1px solid #edf0ec}
+}
+
