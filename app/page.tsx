@@ -14,9 +14,9 @@ type ExtractedQuote={supplier:string;amountExcl:string;amountIncl:string;project
 function cleanPdfText(value:string){return value.replace(/\s+/g," ").trim()}
 function parseDutchAmount(value:string){const normalized=value.replace(/[^\d,.-]/g,"").replace(/\.(?=\d{3}(?:\D|$))/g,"").replace(",",".");const amount=Number(normalized);return Number.isFinite(amount)?amount:0}
 async function recognizePdfLocally(file:File):Promise<ExtractedQuote>{
- const pdfUrl="https://cdn.jsdelivr.net/npm/pdfjs-dist@6.2.108/build/pdf.mjs";
+ const pdfUrl="https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.min.mjs";
  const pdfjs=await import(/* @vite-ignore */ pdfUrl) as {GlobalWorkerOptions:{workerSrc:string};getDocument:(options:{data:ArrayBuffer})=>{promise:Promise<{numPages:number;getPage:(page:number)=>Promise<{getTextContent:()=>Promise<{items:Array<{str?:string;hasEOL?:boolean}>}>}>}>}};
- pdfjs.GlobalWorkerOptions.workerSrc="https://cdn.jsdelivr.net/npm/pdfjs-dist@6.2.108/build/pdf.worker.mjs";
+ pdfjs.GlobalWorkerOptions.workerSrc="https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs";
  const pdf=await pdfjs.getDocument({data:await file.arrayBuffer()}).promise;const lines:string[]=[];
  for(let page=1;page<=Math.min(pdf.numPages,8);page++){const content=await (await pdf.getPage(page)).getTextContent();let line="";for(const item of content.items){line+=`${item.str||""} `;if(item.hasEOL&&cleanPdfText(line)){lines.push(cleanPdfText(line));line=""}}if(cleanPdfText(line))lines.push(cleanPdfText(line))}
  const text=lines.join("\n");if(text.length<30)throw new Error("Deze PDF bevat geen leesbare tekst. Gebruik een duidelijke PDF of afbeelding.");
